@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DatadeskRouteImport } from './routes/datadesk'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EditorDiagramIdRouteImport } from './routes/editor.$diagramId'
 
+const DatadeskRoute = DatadeskRouteImport.update({
+  id: '/datadesk',
+  path: '/datadesk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +31,43 @@ const EditorDiagramIdRoute = EditorDiagramIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/datadesk': typeof DatadeskRoute
   '/editor/$diagramId': typeof EditorDiagramIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/datadesk': typeof DatadeskRoute
   '/editor/$diagramId': typeof EditorDiagramIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/datadesk': typeof DatadeskRoute
   '/editor/$diagramId': typeof EditorDiagramIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/editor/$diagramId'
+  fullPaths: '/' | '/datadesk' | '/editor/$diagramId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/editor/$diagramId'
-  id: '__root__' | '/' | '/editor/$diagramId'
+  to: '/' | '/datadesk' | '/editor/$diagramId'
+  id: '__root__' | '/' | '/datadesk' | '/editor/$diagramId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DatadeskRoute: typeof DatadeskRoute
   EditorDiagramIdRoute: typeof EditorDiagramIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/datadesk': {
+      id: '/datadesk'
+      path: '/datadesk'
+      fullPath: '/datadesk'
+      preLoaderRoute: typeof DatadeskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DatadeskRoute: DatadeskRoute,
   EditorDiagramIdRoute: EditorDiagramIdRoute,
 }
 export const routeTree = rootRouteImport

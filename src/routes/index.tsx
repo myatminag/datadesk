@@ -5,10 +5,12 @@ import {
   UploadIcon,
   DownloadIcon,
   MoreHorizontalIcon,
+  DatabaseIcon,
+  ArrowUpRightIcon,
 } from "lucide-react"
 import { toast } from "sonner"
 import { useMemo } from "react"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 
 import {
   pickJsonFile,
@@ -82,6 +84,14 @@ function Home() {
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-8">
           <BrandMark />
           <div className="flex-1" />
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/datadesk">
+              <DatabaseIcon data-icon="inline-start" />
+              Open DataDesk
+              <ArrowUpRightIcon data-icon="inline-end" />
+            </Link>
+          </Button>
+          <div className="mx-1 h-6 w-px bg-border" />
           <Button variant="outline" onClick={handleImport}>
             <UploadIcon data-icon="inline-start" />
             Import
